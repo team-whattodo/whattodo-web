@@ -4,7 +4,7 @@ import styles from './sidebar.module.css'
 
 const SideBar = () => {
   return (
-    <div className={styles.container}>this is sidebar</div>
+    <div className={styles.container}>깃허브 웹훅마스터</div>
   )
 }
 
