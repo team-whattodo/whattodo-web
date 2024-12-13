@@ -1,10 +1,9 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
-
 * {
   padding: 0;
   margin: 0;
   font-size: 10px;
-  font-family: Pretendard;
+  font-family: var(--font-pretendard);
+  color: white;
   overflow: hidden;
   box-sizing: border-box;
   -webkit-user-select: none;
@@ -18,10 +17,12 @@
   }
 }
 
+
 :root {
-  --background-color: #00171F;
-  --border-color: #565656;
-  
+  --background-color: hsl(240, 11%, 13%);
+  --box-color: hsl(240, 11%, 17%);
+  --border-color: #464646;
+
   --color-100: hsl(166, 45%, 81%);
   --color-200: hsl(166, 45%, 73%);
   --color-300: hsl(166, 45%, 65%);
