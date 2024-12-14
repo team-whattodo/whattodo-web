@@ -1,6 +1,8 @@
+import { API_URL } from "@/constants/api";
 import { TokenResponse } from "@/types/api/token";
 import { LoginData } from "@/types/auth/login";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const useLogin = () => {
@@ -8,13 +10,10 @@ const useLogin = () => {
     email: "",
     password: "",
   });
-  const [emailValid, setEmailValid] = useState(
-    loginData.email.trim().length === 0
-  );
-  const [passwordValid, setPasswordValid] = useState(
-    loginData.email.trim().length === 0
-  );
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -38,19 +37,19 @@ const useLogin = () => {
       return;
     }
     try {
-      const { data } = await axios.post(
-        `${process.env.API_URL}/auth/login`,
-        loginData
-      );
-      return data;
+      const { data } = await axios.post(`${API_URL}/auth/login`, loginData);
+      if (data) {
+        localStorage.setItem("ACCESS_TOKEN", data.accessToken);
+        localStorage.setItem("REFRESH_TOKEN", data.refreshToken);
+        router.push("/");
+      }
     } catch (err: any) {
-      if(err.response && err.response.status === 404) {
+      if (err.response && err.response.status === 404) {
         setEmailValid(false);
       }
       if (err.response && err.response.status === 401) {
-        setEmailValid(false);
+        setPasswordValid(false);
       }
-      Promise.reject(err);
     } finally {
       setLoading(false);
     }
@@ -63,7 +62,13 @@ const useLogin = () => {
     submit,
     emailValid,
     passwordValid,
-  }
+    buttonDisabled:
+      loading ||
+      !emailValid ||
+      !passwordValid ||
+      loginData.email.trim().length === 0 ||
+      loginData.password.trim().length === 0,
+  };
 };
 
 export default useLogin;

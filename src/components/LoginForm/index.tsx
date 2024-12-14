@@ -9,14 +9,11 @@ const LoginForm = () => {
   const { ...login } = useLogin();
   const router = useRouter();
 
-  const submit = async () => {
-    const res = await login.submit();
-    if (res) {
-      localStorage.setItem("ACCESS_TOKEN", res.data.accessToken);
-      localStorage.setItem("REFRESH_TOKEN", res.data.refreshToken);
-      router.push("/");
+  const onEnter = (e: React.KeyboardEvent) => {
+    if(e.key === "Enter" && !e.nativeEvent.isComposing) {
+      login.submit();
     }
-  };
+  }
 
   return (
     <div className={styles.container}>
@@ -30,6 +27,7 @@ const LoginForm = () => {
           name="email"
           onChange={login.handleData}
           value={login.loginData.email}
+          onKeyDown={onEnter}
         />
         <div className={styles.warning}>
           {!login.emailValid && "존재하지 않는 회원입니다."}
@@ -42,6 +40,7 @@ const LoginForm = () => {
           name="password"
           onChange={login.handleData}
           value={login.loginData.password}
+          onKeyDown={onEnter}
         />
         <div className={styles.warning}>
           {!login.passwordValid && "비밀번호가 올바르지 않습니다."}
@@ -49,20 +48,16 @@ const LoginForm = () => {
       </div>
       <div className={styles.spacer}></div>
       <div className={styles.navWrap}>
-        <p className={styles.nav} onClick={()=>router.push('/signup')}>회원이 아니신가요?</p>
+        <p className={styles.nav} onClick={() => router.push("/signup")}>
+          회원이 아니신가요?
+        </p>
       </div>
       <button
         className={styles.button}
-        onClick={submit}
-        disabled={
-          login.loading ||
-          !login.emailValid ||
-          !login.passwordValid ||
-          login.loginData.email.trim().length === 0 ||
-          login.loginData.password.trim().length === 0
-        }
+        onClick={login.submit}
+        disabled={login.buttonDisabled}
       >
-        로그인
+        {login.loading ? "로그인 중..." : "로그인"}
       </button>
     </div>
   );
