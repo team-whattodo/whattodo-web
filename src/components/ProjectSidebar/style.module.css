@@ -1,0 +1,47 @@
+.container {
+  width: 48rem;
+  height: 100%;
+  background-color: var(--box-color);
+  border-radius: 2rem 0 0 0;
+  border-left: 0.1rem solid var(--border-color);
+  border-top: 0.1rem solid var(--border-color);
+  padding: 1.2rem;
+}
+
+.sidebarTitle{
+  font-size: 2.4rem;
+  font-family: var(--font-dohyeon);
+  font-style: italic;
+  padding-right: 1rem;
+  margin-bottom: 2.4rem;
+  color: var(--color-500);
+  text-align: center;
+}
+
+.sidebarSubTitle {
+  font-size: 1.8rem;
+}
+
+.sidebarInput {
+  font-size: 1.6rem;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  width: 100%;
+  outline: none;
+  margin: 1rem 0 3.2rem 0;
+}
+
+.sidebarTextarea {
+  font-size: 1.2rem;
+  resize: none;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  width: 100%;
+  min-height: 8rem;
+  outline: none;
+  margin: 1rem 0 3.2rem 0;
+}

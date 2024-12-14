@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "./homeContent.module.css";
+import styles from "./style.module.css";
 import useGetMe from "@/hooks/user/useGetMe";
 import { User } from "@/types/user/user";
 import Spinner from "../Spinner";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/useUserStore";
 
 const HomeContent = () => {
   const [loading, setLoading] = useState(false);
   const getMe = useGetMe();
-  const [user, setUser] = useState<User>();
+  const { user, setUser } = useUserStore();
   const router = useRouter();
 
   const fetchUser = async () => {
@@ -24,7 +25,7 @@ const HomeContent = () => {
       if (user.projects.length > 0) {
         router.push(`/project/${user.projects[0].id}`);
       }
-      setLoading(true);
+      setLoading(false);
     }, 1000);
   };
 
@@ -33,13 +34,16 @@ const HomeContent = () => {
   }, []);
 
   if (!user || loading) {
-    return <Spinner />;
+    return (
+      <div className={styles.container}>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
     <div className={styles.container}>
-      <p>홈 콘텐트</p>
-      <p>{user.nickname}</p>
+      <button className={styles.button} onClick={() => router.push('/project')}>시작하기</button>
     </div>
   );
 };

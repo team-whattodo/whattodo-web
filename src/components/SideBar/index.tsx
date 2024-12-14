@@ -1,11 +1,47 @@
-'use client'
+"use client";
 
-import styles from './sidebar.module.css'
+import { useUserStore } from "@/store/useUserStore";
+import styles from "./style.module.css";
+import { useRouter } from "next/navigation";
+import useGetMe from "@/hooks/user/useGetMe";
+import { useEffect } from "react";
+import { User } from "@/types/user/user";
 
-const SideBar = () => {
+const Sidebar = () => {
+  const getMe = useGetMe();
+  const { user, setUser } = useUserStore();
+  const router = useRouter();
+
+  const fetchUser = async () => {
+    const data: User = await getMe();
+    if (JSON.stringify(data) !== JSON.stringify(user)) {
+      setUser(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <div className={styles.container}>깃허브 웹훅마스터 민재야 안녕 반가워 안녕 기찬아</div>
-  )
-}
+    <div className={styles.container}>
+      <p className={styles.title}>내 프로젝트</p>
+      <div className={styles.projectWrap}>
+        {user?.projects.map((project) => (
+          <div className={styles.projectItem} key={project.id}>
+            <p
+              className={styles.projectTitle}
+              onClick={() => router.push(`/project/${project.id}`)}
+            >
+              {project.title}
+            </p>
+          </div>
+        ))}
+        <div className={styles.makeProjectButton}>+</div>
+      </div>
+      <div className={styles.footer}></div>
+    </div>
+  );
+};
 
-export default SideBar
+export default Sidebar;

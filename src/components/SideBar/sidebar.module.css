@@ -1,6 +1,0 @@
-.container {
-  width: 36rem;
-  height: 100%;
-  background-color: var(--box-color);
-  border-right: 0.1rem solid var(--border-color);
-}

@@ -22,8 +22,8 @@ const jua = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "왓투두 | 할 일과 개발을 한번에",
-  description: "할 일과 개발을 한번에",
+  title: "왓투두 | 일정 관리와 개발을 한번에",
+  description: "일정 관리와 개발을 한번에",
 };
 
 const RootLayout = ({

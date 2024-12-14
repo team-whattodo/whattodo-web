@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styles from "./loginForm.module.css";
+import styles from "./style.module.css";
 import { useRouter } from "next/navigation";
 import useSignup from "@/hooks/auth/useSignup";
 

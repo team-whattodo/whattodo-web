@@ -12,4 +12,12 @@
   font-size: 6rem;
   font-style: italic;
   padding: 0 1rem;
+  color: var(--color-300);
+}
+
+.subTitle {
+  font-size: 3.2rem;
+  font-style: italic;
+  padding: 0 1rem;
+  font-weight: 200;
 }

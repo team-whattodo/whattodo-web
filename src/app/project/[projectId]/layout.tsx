@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./layout.module.css";
-import SideBar from "@/components/SideBar";
+import Sidebar from "@/components/Sidebar";
 
 const ProjectLayout = ({
   children,
@@ -9,7 +9,7 @@ const ProjectLayout = ({
 }>) => {
   return (
     <div className={styles.container}>
-      <SideBar />
+      <Sidebar />
       <div className={styles.contentWrap}>{children}</div>
     </div>
   );

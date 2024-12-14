@@ -1,7 +1,7 @@
 "use client";
 import { Sprint } from "@/types/sprint/sprint";
 import React from "react";
-import styles from "./sprintContent.module.css";
+import styles from "./style.module.css";
 import SprintTask from "../SprintTask";
 
 const SprintContent = ({ data }: { data: Sprint }) => {

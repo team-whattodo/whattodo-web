@@ -59,8 +59,6 @@ watodoAxios.interceptors.response.use(
     } else {
       originalRequest.headers["Content-Type"] = "application/json";
     }
-
-    // 401 에러가 발생한 경우 토큰이 만료되었다고 가정
     if (originalRequest && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem("REFRESH_TOKEN");

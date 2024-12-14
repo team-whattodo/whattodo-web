@@ -1,5 +1,4 @@
 import { API_URL } from "@/constants/api";
-import { TokenResponse } from "@/types/api/token";
 import { LoginData } from "@/types/auth/login";
 import axios from "axios";
 import { useRouter } from "next/navigation";

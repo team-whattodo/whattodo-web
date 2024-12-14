@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import styles from "./sprintTask.module.css";
+import styles from "./style.module.css";
 import { Task } from "@/types/task/task";
 
 const SprintTask = ({ data } : { data: Task }) => {

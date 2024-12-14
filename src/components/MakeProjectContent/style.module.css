@@ -1,0 +1,65 @@
+.container {
+  width: 100%;
+  max-width: 64rem;
+  height: 52rem;
+  border-radius: 1rem;
+  border: 0.1rem solid var(--border-color);
+  padding: 2rem;
+  background-color: var(--box-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+}
+
+.input {
+  font-size: 1.6rem;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  width: 100%;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.textarea {
+  font-size: 1.2rem;
+  resize: none;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  width: 100%;
+  min-height: 8rem;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.warning {
+  font-size: 1.2rem;
+  color: #FF2929;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.button {
+  width: 100%;
+  padding: 1rem 0;
+  border-radius: 0.4rem;
+  background-color: var(--color-500);
+  border: none;
+  outline: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
