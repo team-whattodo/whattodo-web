@@ -17,7 +17,7 @@
   }
 }
 
-input{
+input {
   background-color: transparent;
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -29,10 +29,10 @@ input{
   }
 }
 
-
 :root {
-  --background-color: hsl(240, 11%, 13%);
-  --box-color: hsl(240, 11%, 17%);
+  --background-color: #1b1b1b;
+  --box-color: #202020;
+  --item-color: #3b3b3b;
   --border-color: #464646;
 
   --color-100: hsl(166, 45%, 81%);

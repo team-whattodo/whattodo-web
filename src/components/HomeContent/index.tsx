@@ -5,39 +5,34 @@ import styles from "./homeContent.module.css";
 import useGetMe from "@/hooks/user/useGetMe";
 import { User } from "@/types/user/user";
 import Spinner from "../Spinner";
-import useGetMyProject from "@/hooks/user/useGetMyProject";
-import { Project } from "@/types/project/project";
 import { useRouter } from "next/navigation";
 
 const HomeContent = () => {
   const [loading, setLoading] = useState(false);
-  const getMe = useGetMe(loading, setLoading);
-  const getMyProject = useGetMyProject(loading, setLoading);
+  const getMe = useGetMe();
   const [user, setUser] = useState<User>();
   const router = useRouter();
 
   const fetchUser = async () => {
-    const user = await getMe();
-    if (user) {
-      setUser(user);
+    if (loading) {
+      return;
     }
-  };
-
-  const fetchMyProject = async () => {
-    const projects: Project[] = await getMyProject();
-    if(projects && projects.length > 0) {
-      router.push(`/project/${projects[0].id}`);
-    }
+    setLoading(true);
+    const user: User = await getMe();
+    setUser(user);
+    setTimeout(() => {
+      if (user.projects.length > 0) {
+        router.push(`/project/${user.projects[0].id}`);
+      }
+      setLoading(true);
+    }, 1000);
   };
 
   useEffect(() => {
-    if (!loading) {
-      fetchMyProject();
-      fetchUser();
-    }
-  }, [loading]);
+    fetchUser();
+  }, []);
 
-  if (!user) {
+  if (!user || loading) {
     return <Spinner />;
   }
 

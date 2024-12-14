@@ -15,6 +15,12 @@ const doHyeon = localFont({
   weight: "100 900",
 });
 
+const jua = localFont({
+  src: './fonts/Jua-Regular.ttf',
+  variable: '--font-jua',
+  weight: '100 900',
+})
+
 export const metadata: Metadata = {
   title: "왓투두 | 할 일과 개발을 한번에",
   description: "할 일과 개발을 한번에",
@@ -27,7 +33,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className={`${pretendard.variable} ${doHyeon.variable}`}>
+      <body className={`${pretendard.variable} ${doHyeon.variable} ${jua.variable}`}>
         <div className={styles.container}>{children}</div>
       </body>
     </html>
