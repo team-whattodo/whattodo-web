@@ -12,7 +12,7 @@ const MakeProjectContent = () => {
       <input
         type="text"
         className={styles.input}
-        placeholder="프로젝트 이름을 3글자 이상 입력해주세요."
+        placeholder="프로젝트 이름을 1글자 이상 입력해주세요."
         value={hook.projectData.title}
         name="title"
         onChange={hook.handleData}
@@ -34,9 +34,20 @@ const MakeProjectContent = () => {
         name="repository"
         onChange={hook.handleData}
       />
-      <p className={styles.warning}>{!hook.repoValid && "올바르지 않은 레포지토리 주소입니다."}</p>
+      <p className={styles.warning}>
+        {!hook.repoValid && "올바르지 않은 레포지토리 주소입니다."}
+      </p>
       <div className={styles.spacer}></div>
-      <button className={styles.button} disabled={hook.buttonDisabled} onClick={hook.submit}>{hook.loading ? "생성 중..." : "생성하기"}</button>
+      <p className={styles.warning}>
+        {hook.isFailed && "프로젝트 생성에 실패했습니다."}
+      </p>
+      <button
+        className={styles.button}
+        disabled={hook.buttonDisabled}
+        onClick={hook.submit}
+      >
+        {hook.loading ? "생성 중..." : "생성하기"}
+      </button>
     </div>
   );
 };

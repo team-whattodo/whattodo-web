@@ -1,9 +1,25 @@
 "use client";
-import React from "react";
+import React, { SetStateAction } from "react";
 import styles from "./style.module.css";
-import { Project } from "@/types/project/project";
+import useEditProject from "@/hooks/project/useEditProject";
+import { ProjectDetail } from "@/types/project/projectDetail";
 
-const ProjectSidebar = ({ project }: { project: Project }) => {
+const ProjectSidebar = ({
+  project,
+  setProject,
+}: {
+  project: ProjectDetail;
+  setProject: React.Dispatch<SetStateAction<ProjectDetail | undefined>>;
+}) => {
+  const { ...hook } = useEditProject(project);
+
+  const submit = async () => {
+    const data = await hook.submit();
+    if (data) {
+      setProject(data);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <p className={styles.sidebarTitle}>프로젝트 설정</p>
@@ -11,19 +27,48 @@ const ProjectSidebar = ({ project }: { project: Project }) => {
       <input
         type="text"
         className={styles.sidebarInput}
-        value={project.title}
+        value={hook.projectData.title}
+        onChange={hook.handleData}
+        name="title"
       />
+      <p className={styles.warning}>
+        {hook.projectData.title.trim().length < 1 && "1글자 이상 입력해주세요."}
+      </p>
       <p className={styles.sidebarSubTitle}>프로젝트 설명</p>
       <textarea
         className={styles.sidebarTextarea}
-        value={project.detail}
+        value={hook.projectData.detail}
+        onChange={hook.handleData}
+        name="detail"
       ></textarea>
+      <p className={styles.warning}>
+        {hook.projectData.detail.trim().length < 10 &&
+          "10글자 이상 입력해주세요."}
+      </p>
       <p className={styles.sidebarSubTitle}>연결된 깃허브 레포지토리</p>
       <input
         type="text"
         className={styles.sidebarInput}
-        value={project.repository}
+        value={hook.projectData.repository}
+        onChange={hook.handleData}
+        name="repository"
       />
+      <p className={styles.warning}>
+        {!hook.repoValid && "올바르지 않은 레포지토리 주소입니다."}
+      </p>
+      <p className={styles.warning} style={{ margin: 0 }}>
+        {hook.isFailed && "저장에 실패했습니다."}
+      </p>
+      <div className={styles.spacer}></div>
+      <div className={styles.buttonWrap}>
+        <button
+          className={styles.button}
+          onClick={submit}
+          disabled={hook.buttonDisabled}
+        >
+          {hook.loading ? "저장 중..." : "저장"}
+        </button>
+      </div>
     </div>
   );
 };

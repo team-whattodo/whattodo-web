@@ -24,6 +24,7 @@ const ProjectPage = () => {
 
   useEffect(() => {
     fetchProject();
+    localStorage.setItem("RECENT_PROJECT", projectId);
   }, [projectId]);
 
   if (!project) {
@@ -48,7 +49,7 @@ const ProjectPage = () => {
             <p className={styles.starterText}>아직 등록된 일정이 없습니다...</p>
             <button className={styles.button}>일정 만들기</button>
           </div>
-          <ProjectSidebar project={project} />
+          <ProjectSidebar project={project} setProject={setProject} />
         </div>
       </div>
     );
@@ -66,7 +67,7 @@ const ProjectPage = () => {
         ) : (
           project.sprint !== null && <SprintContent data={project.sprint} />
         )}
-        <ProjectSidebar project={project}/>
+        <ProjectSidebar project={project} setProject={setProject}/>
       </div>
     </div>
   );

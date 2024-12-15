@@ -23,7 +23,8 @@ const HomeContent = () => {
     setUser(user);
     setTimeout(() => {
       if (user.projects.length > 0) {
-        router.push(`/project/${user.projects[0].id}`);
+        const recentProject = localStorage.getItem('RECENT_PROJECT');
+        router.push(`/project/${recentProject || user.projects[0].id}`);
       }
       setLoading(false);
     }, 1000);

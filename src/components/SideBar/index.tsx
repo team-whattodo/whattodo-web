@@ -28,16 +28,28 @@ const Sidebar = () => {
       <p className={styles.title}>내 프로젝트</p>
       <div className={styles.projectWrap}>
         {user?.projects.map((project) => (
-          <div className={styles.projectItem} key={project.id}>
-            <p
-              className={styles.projectTitle}
-              onClick={() => router.push(`/project/${project.id}`)}
-            >
-              {project.title}
-            </p>
+          <div
+            className={styles.projectItem}
+            key={project.id}
+            onClick={() => router.push(`/project/${project.id}`)}
+          >
+            <p className={styles.projectTitle}>{project.title}</p>
           </div>
         ))}
-        <div className={styles.makeProjectButton}>+</div>
+        <div className={styles.projectButtonWrap}>
+          <div
+            className={styles.projectButton}
+            onClick={() => router.push("/project")}
+          >
+            새 프로젝트
+          </div>
+          <div
+            className={styles.projectButton}
+            onClick={() => router.push("/project/join")}
+          >
+            프로젝트 참가
+          </div>
+        </div>
       </div>
       <div className={styles.footer}></div>
     </div>

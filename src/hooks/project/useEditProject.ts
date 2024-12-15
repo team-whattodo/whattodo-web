@@ -1,29 +1,42 @@
 import { REPOSITORY_REGEX } from "@/constants/regex";
 import watodoAxios from "@/libs/axios/watodoAxios";
 import { MakeProject } from "@/types/project/makeProject";
-import { useRouter } from "next/navigation";
+import { ProjectDetail } from "@/types/project/projectDetail";
 import React, { useEffect, useState } from "react";
 
-const useMakeProject = () => {
+const useEditProject = (project: ProjectDetail) => {
   const [projectData, setProjectData] = useState<MakeProject>({
-    title: "",
-    detail: "",
-    repository: "",
+    title: project.title,
+    detail: project.detail,
+    repository: `https://github.com/${project.repository}`,
   });
   const [loading, setLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const [repoValid, setRepoValid] = useState(true);
-  const router = useRouter();
+  const [isChanged, setIsChanged] = useState(true);
 
-  const handleData = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleData = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setProjectData((prev) => ({ ...prev, [name]: value }));
   };
 
   useEffect(()=>{
-    if (REPOSITORY_REGEX.test(projectData.repository) || projectData.repository.trim().length === 0) {
+    setIsChanged(
+      project.title !== projectData.title ||
+        project.detail !== projectData.detail ||
+        `https://github.com/${project.repository}` !== projectData.repository
+    );
+  },[projectData]);
+
+  useEffect(() => {
+    if (
+      REPOSITORY_REGEX.test(projectData.repository) ||
+      projectData.repository.trim().length === 0
+    ) {
       setRepoValid(true);
-    }else{
+    } else {
       setRepoValid(false);
     }
   }, [projectData.repository]);
@@ -40,8 +53,13 @@ const useMakeProject = () => {
     }
     try {
       setLoading(true);
-      await watodoAxios.post("/project", projectData);
-      router.push("/project/intro");
+      const { data } = await watodoAxios.patch(
+        `/project/${project.id}`,
+        projectData
+      );
+      if (data) {
+        return data;
+      }
     } catch {
       setIsFailed(true);
     } finally {
@@ -58,11 +76,11 @@ const useMakeProject = () => {
     buttonDisabled:
       loading ||
       !repoValid ||
-      projectData.title.trim().length === 0 ||
-      projectData.detail.trim().length === 0 ||
-      projectData.repository.trim().length === 0,
-    loading
+      projectData.title.trim().length < 1 ||
+      projectData.detail.trim().length < 10 ||
+      !isChanged,
+    loading,
   };
 };
 
-export default useMakeProject;
+export default useEditProject;

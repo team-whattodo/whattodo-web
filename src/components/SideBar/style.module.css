@@ -52,14 +52,21 @@
   color: var(--color-100);
 }
 
-.makeProjectButton {
-  width: 4rem;
-  padding: 0.2rem 0;
+.projectButtonWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.projectButton {
+  padding: 0.4rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--item-color);
-  font-size: 2.4rem;
+  font-size: 1.6rem;
   border-radius: 1rem;
   cursor: pointer;
+  font-weight: 300;
 }
