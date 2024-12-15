@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .button {
@@ -17,5 +18,14 @@
   transition: all 0.2s;
   &:hover{
     background-color: var(--color-600);
+  }
+}
+
+.join {
+  background-color: white;
+  color: var(--color-500);
+  &:hover{
+    background-color: var(--color-100);
+    color: var(--color-800);
   }
 }

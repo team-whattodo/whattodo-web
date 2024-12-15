@@ -44,7 +44,12 @@ const HomeContent = () => {
 
   return (
     <div className={styles.container}>
-      <button className={styles.button} onClick={() => router.push('/project')}>시작하기</button>
+      <button className={styles.button} onClick={() => router.push("/project")}>
+        프로젝트 만들기
+      </button>
+      <button className={`${styles.button} ${styles.join}`} onClick={() => router.push("/project/join")}>
+        프로젝트 참가하기
+      </button>
     </div>
   );
 };

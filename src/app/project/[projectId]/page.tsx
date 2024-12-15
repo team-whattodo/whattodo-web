@@ -8,6 +8,8 @@ import styles from "./page.module.css";
 import WbsContent from "@/components/Wbs";
 import SprintContent from "@/components/SprintContent";
 import ProjectSidebar from "@/components/ProjectSidebar";
+import Image from "next/image";
+import WATODO from '@/app/assets/WATODO.svg';
 
 const ProjectPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -27,8 +29,12 @@ const ProjectPage = () => {
     localStorage.setItem("RECENT_PROJECT", projectId);
   }, [projectId]);
 
-  if (!project) {
-    return <Spinner />;
+  if (!project || loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <Spinner />
+      </div>
+    );
   }
 
   if (project.sprint === null && project.wbs === null) {
@@ -41,6 +47,7 @@ const ProjectPage = () => {
           </div>
           <div className={styles.logoWrap}>
             <p className={styles.logoText}>WATODO</p>
+            <Image src={WATODO} alt="watodo logo" width={60} height={60} />
           </div>
         </div>
 

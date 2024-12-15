@@ -18,8 +18,8 @@ const useGetProject = (
       }
     } catch {
       router.push("/login");
-    }finally {
-      setLoading(false);
+    } finally {
+      setTimeout(() => setLoading(false), 1000);
     }
   };
 

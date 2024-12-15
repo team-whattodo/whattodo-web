@@ -56,10 +56,12 @@ const ProjectSidebar = ({
       <p className={styles.warning}>
         {!hook.repoValid && "올바르지 않은 레포지토리 주소입니다."}
       </p>
+      <p className={styles.sidebarSubTitle}>참가 코드</p>
+      <input type="text" className={styles.sidebarInput} readOnly value={project.id} />
+      <div className={styles.spacer}></div>
       <p className={styles.warning} style={{ margin: 0 }}>
         {hook.isFailed && "저장에 실패했습니다."}
       </p>
-      <div className={styles.spacer}></div>
       <div className={styles.buttonWrap}>
         <button
           className={styles.button}

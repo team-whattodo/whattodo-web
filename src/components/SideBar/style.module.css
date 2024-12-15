@@ -5,13 +5,19 @@
   border-right: 0.1rem solid var(--border-color);
 }
 
+.titleWrap {
+  width: 100%;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  height: 4rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
 .title {
   width: 100%;
-  padding: 1rem;
-  height: 4rem;
-  margin-top: 1rem;
   font-size: 1.8rem;
-  font-weight: 300;
 }
 
 .projectWrap {
@@ -39,8 +45,8 @@
   cursor: pointer;
   transition: all 0.4s;
   border: 0.1rem solid var(--box-color);
-  border-radius: 1rem;
-  background-color: var(--item-color);
+  border-radius: 0.4rem;
+  background-color: var(--background-color);
   &:hover {
     border: 0.1rem solid var(--border-color);
   }
@@ -49,13 +55,13 @@
 .projectTitle {
   font-size: 2.4rem;
   font-family: var(--font-jua);
-  color: var(--color-100);
+  color: var(--color-300);
 }
 
 .projectButtonWrap {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 1rem;
 }
 
@@ -66,7 +72,7 @@
   align-items: center;
   background-color: var(--item-color);
   font-size: 1.6rem;
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   cursor: pointer;
   font-weight: 300;
 }
