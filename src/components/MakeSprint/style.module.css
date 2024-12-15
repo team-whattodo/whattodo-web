@@ -1,0 +1,99 @@
+.container {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.formSubTitle {
+  width: 100%;
+  text-align: start;
+  font-size: 2rem;
+  margin: 1rem 0;
+  font-weight: 300;
+}
+
+.input {
+  width: 100%;
+  font-size: 1.6rem;
+  padding: 1rem;
+  background-color: var(--background-color);
+  border: 0.1rem solid var(--border-color);
+  border-radius: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+
+.textarea {
+  font-size: 1.2rem;
+  resize: none;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 1rem;
+  width: 100%;
+  min-height: 8rem;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.dateInput {
+  width: 100%;
+  border: none;
+  font-size: 1.6rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: url('../../app/assets/calendar.svg') no-repeat right 10px center var(--box-color);
+  outline: none;
+  font-family: var(--font-dohyeon);
+  &::-webkit-calendar-picker-indicator {
+    appearance: none;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.button {
+  width: 100%;
+  font-size: 1.6rem;
+  background-color: var(--color-300);
+  border-radius: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.8rem 1.6rem;
+  transition: all 0.4s;
+  &:hover {
+    background-color: var(--color-500);
+  }
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.cancel {
+  margin-top: 1rem;
+  color: #888;
+  background-color: var(--box-color);
+  &:hover {
+    background-color: var(--item-color);
+  }
+  &:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+  }
+}
+
+.warning {
+  width: 100%;
+  height: 2rem;
+  font-size: 1.2rem;
+  color: #FF2929;
+  text-align: start;
+}

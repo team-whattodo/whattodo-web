@@ -10,12 +10,14 @@ import SprintContent from "@/components/SprintContent";
 import ProjectSidebar from "@/components/ProjectSidebar";
 import Image from "next/image";
 import WATODO from '@/app/assets/WATODO.svg';
+import { useRouter } from "next/navigation";
 
 const ProjectPage = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [loading, setLoading] = useState(false);
   const getProject = useGetProject(loading, setLoading);
   const [project, setProject] = useState<ProjectDetail>();
+  const router = useRouter();
 
   const fetchProject = async () => {
     const project = await getProject(projectId);
@@ -54,7 +56,7 @@ const ProjectPage = () => {
         <div className={styles.projectLayout}>
           <div className={styles.projectStarterWrap}>
             <p className={styles.starterText}>아직 등록된 일정이 없습니다...</p>
-            <button className={styles.button}>일정 만들기</button>
+            <button className={styles.button} onClick={() => router.push(`/project/${projectId}/schedule`)}>일정 만들기</button>
           </div>
           <ProjectSidebar project={project} setProject={setProject} />
         </div>
@@ -64,9 +66,15 @@ const ProjectPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.projectInfoWrap}>
-        <p className={styles.projectTitle}>{project?.title} 프로젝트</p>
-        <p className={styles.projectDetail}>"{project.detail}"</p>
+        <div className={styles.header}>
+          <div className={styles.projectInfoWrap}>
+            <p className={styles.projectTitle}>{project?.title} 프로젝트</p>
+            <p className={styles.projectDetail}>"{project.detail}"</p>
+          </div>
+          <div className={styles.logoWrap}>
+            <p className={styles.logoText}>WATODO</p>
+            <Image src={WATODO} alt="watodo logo" width={60} height={60} />
+          </div>
       </div>
       <div className={styles.projectLayout}>
         {project.wbs !== null ? (

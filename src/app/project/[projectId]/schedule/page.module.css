@@ -1,0 +1,69 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.form {
+  width: 100%;
+  max-width: 52rem;
+  height: 74rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formTitle {
+  font-size: 3.2rem;
+  font-family: var(--font-dohyeon);
+  font-style: italic;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+}
+
+.selectBoxWrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.selectBox {
+  width: calc(50% - 1rem);
+  height: 16rem;
+  border-radius: 1rem;
+  background-color: var(--box-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 2rem;
+}
+
+.selected {
+  border: 0.2rem solid var(--color-400);
+}
+
+.typeTitle {
+  font-size: 2.4rem;
+  font-family: var(--font-dohyeon);
+  font-style: italic;
+  padding-right: 1rem;
+}
+
+.typeDetail {
+  font-size: 1.2rem;
+  text-align: center;
+  width: 100%;
+  font-weight: 300;
+  word-break: keep-all;
+  padding: 0.4rem 0;
+}
+

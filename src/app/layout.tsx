@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import styles from './layout.module.css';
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -33,8 +34,12 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className={`${pretendard.variable} ${doHyeon.variable} ${jua.variable}`}>
-        <div className={styles.container}>{children}</div>
+      <body
+        className={`${pretendard.variable} ${doHyeon.variable} ${jua.variable}`}
+      >
+        <AntdRegistry>
+          <div className={styles.container}>{children}</div>
+        </AntdRegistry>
       </body>
     </html>
   );

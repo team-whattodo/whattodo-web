@@ -1,11 +1,14 @@
 "use client";
 import { Sprint } from "@/types/sprint/sprint";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./style.module.css";
 import SprintTask from "../SprintTask";
+import TaskModal from "../TaskModal";
 
 const SprintContent = ({ data }: { data: Sprint }) => {
   const doneTask = data.tasks.filter((item) => item.done);
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <div className={styles.container}>
       <div className={styles.section}>
@@ -32,10 +35,18 @@ const SprintContent = ({ data }: { data: Sprint }) => {
             <SprintTask data={task} key={task.id} />
           ))}
           <div className={styles.addTaskWrap}>
-            <div className={styles.addTask}>+</div>
+            <div className={styles.addTask} onClick={() => setModalVisible(true)}>+</div>
           </div>
         </div>
       </div>
+      {modalVisible && (
+        <TaskModal
+          type="CREATE"
+          setVisible={setModalVisible}
+          parentType="SPRINT"
+          parentId={data.id}
+        />
+      )}
     </div>
   );
 };
