@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import { IoCalendarOutline } from 'react-icons/io5';
 import { BsLightning } from 'react-icons/bs';
 import MakeSprint from '@/components/MakeSprint';
-import MakeWbs from '@/components/\bMakeWbs';
+import MakeWbs from '@/components/MakeWbs';
 import { useParams, useRouter } from 'next/navigation';
 import useGetProject from '@/hooks/project/useGetProject';
 import { ProjectDetail } from '@/types/project/projectDetail';
