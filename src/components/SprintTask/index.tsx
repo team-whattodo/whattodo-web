@@ -11,7 +11,7 @@ const SprintTask = ({ data, onClick }: { data: Task, onClick: () => void }) => {
       onClick={!data.done ? onClick : () => {}}
     >
       <p className={styles.taskTitle}>{data.title}</p>
-      <p className={styles.isDone}>
+      <p className={styles.isDone} style={{ color: data.done ? "white" : "" }}>
         {data.done
           ? "개발을 완료했습니다."
           : data.branch === null
@@ -19,7 +19,12 @@ const SprintTask = ({ data, onClick }: { data: Task, onClick: () => void }) => {
           : "아직 개발 중입니다."}
       </p>
       {data.branch && (
-        <div className={styles.branch}>{data.branch.split(":")[1]}</div>
+        <div
+          className={styles.branch}
+          style={{ backgroundColor: data.done ? "var(--color-300)" : "", border: '0.1rem solid var(--color-700)' }}
+        >
+          {data.branch.split(":")[1]}
+        </div>
       )}
     </div>
   );

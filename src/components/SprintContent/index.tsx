@@ -5,9 +5,11 @@ import SprintTask from "../SprintTask";
 import TaskModal from "../TaskModal";
 import { useProjectStore } from "@/store/useProjectStore";
 import { Task } from "@/types/task/task";
+import useEditSprint from "@/hooks/sprint/useEditSprint";
 
 const SprintContent = () => {
   const { project, setProject } = useProjectStore();
+  const { ...editHook } = useEditSprint(project?.sprint);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<"CREATE" | "EDIT">("CREATE");
   const [targetTask, setTargetTask] = useState<Task>();
@@ -77,6 +79,55 @@ const SprintContent = () => {
           >
             +
           </div>
+        </div>
+      </div>
+      <div className={styles.section}>
+        <p className={styles.sectionTitle}>스프린트 설정</p>
+        <div className={styles.editSprintWrap}>
+          <p className={styles.formSubTitle}>스프린트 제목</p>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder="1글자 이상 입력해주세요."
+            onChange={editHook.handleData}
+            name="title"
+            value={editHook.sprintData.title}
+          />
+          <p className={styles.formSubTitle}>스프린트 설명</p>
+          <textarea
+            className={styles.textarea}
+            placeholder="10글자 이상 입력해주세요."
+            onChange={editHook.handleData}
+            name="detail"
+            value={editHook.sprintData.detail}
+          ></textarea>
+          <p className={styles.formSubTitle}>스프린트 시작일</p>
+          <input
+            type="date"
+            className={styles.dateInput}
+            onChange={editHook.handleData}
+            name="start"
+            value={editHook.sprintData.start}
+          />
+          <p className={styles.formSubTitle}>스프린트 종료일</p>
+          <input
+            type="date"
+            className={styles.dateInput}
+            onChange={editHook.handleData}
+            name="deadline"
+            value={editHook.sprintData.deadline}
+          />
+          <div className={styles.spacer}></div>
+          <p className={styles.warning}>
+            {editHook.isFailed && "스프린트 생성에 실패했습니다."}
+          </p>
+          <button
+            className={styles.button}
+            disabled={editHook.buttonDisabled}
+            onClick={editHook.submit}
+          >
+            {editHook.loading ? "수정 중..." : "수정하기"}
+          </button>
         </div>
       </div>
       {modalVisible && (
