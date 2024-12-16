@@ -49,7 +49,9 @@ const SprintContent = () => {
             style={{
               width: `${(doneTask.length / project.sprint.task.length) * 100}%`,
             }}
-          ></div>
+          >
+            {((doneTask.length / project.sprint.task.length) * 100).toFixed()}%
+          </div>
         </div>
         <div className={styles.taskCounterWrap}>
           {project?.sprint?.task.map((task, idx) => {

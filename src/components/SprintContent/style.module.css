@@ -38,6 +38,12 @@
   border-radius: 3rem;
   background-color: var(--color-300);
   transition: all 0.4s;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 1rem;
+  color: var(--background-color);
 }
 
 .taskCounterWrap {
