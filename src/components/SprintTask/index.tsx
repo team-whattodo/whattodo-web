@@ -3,11 +3,12 @@ import React from "react";
 import styles from "./style.module.css";
 import { Task } from "@/types/task/task";
 
-const SprintTask = ({ data }: { data: Task }) => {
+const SprintTask = ({ data, onClick }: { data: Task, onClick: () => void }) => {
   return (
     <div
       className={styles.container}
-      style={{ backgroundColor: data.done ? "var(--color-300)" : "" }}
+      style={{ backgroundColor: data.done ? "var(--color-500)" : "" }}
+      onClick={!data.done ? onClick : () => {}}
     >
       <p className={styles.taskTitle}>{data.title}</p>
       <p className={styles.isDone}>

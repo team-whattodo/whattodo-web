@@ -44,10 +44,11 @@
   border-radius: 0.4rem;
   outline: none;
   font-size: 1.6rem;
+  margin-bottom: 1rem;
 }
 
 .spacer {
-  flex: 1;
+  height: 2rem;
 }
 
 .button {

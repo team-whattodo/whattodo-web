@@ -44,11 +44,10 @@ const useMakeProject = () => {
       const { data } : { data: Project } = await watodoAxios.post("/project", projectData);
       if (data) {
         router.push(`/project/${data.id}/intro`);
+        setLoading(false);
       }
     } catch {
       setIsFailed(true);
-    } finally {
-      setLoading(false);
     }
   };
 

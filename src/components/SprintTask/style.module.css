@@ -1,6 +1,6 @@
 .container {
   flex: 1;
-  min-width: 14rem;
+  min-width: 16rem;
   max-width: 20rem;
   background-color: var(--item-color);
   border-radius: 1rem;
@@ -27,4 +27,5 @@
   background-color: var(--background-color);
   border: 0.1rem solid var(--border-color);
   border-radius: 0.4rem;
+  margin-top: 0.4rem;
 }
