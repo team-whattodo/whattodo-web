@@ -2,21 +2,29 @@
 import React, { SetStateAction } from "react";
 import styles from "./style.module.css";
 import useMakeTask from "@/hooks/task/useMakeTask";
+import { useProjectStore } from "@/store/useProjectStore";
 
 const TaskModal = ({
   type,
   setVisible,
   parentType,
-  parentId
 }: {
   type: "CREATE" | "EDIT";
   setVisible: React.Dispatch<SetStateAction<boolean>>;
   parentType: "SPRINT" | "WBS";
-  parentId: string
 }) => {
-  const { ...hook } = useMakeTask(parentType, parentId);
+  const { project, setProject } = useProjectStore();
+  const { ...hook } = useMakeTask(parentType, project?.sprint?.id);
   const close = () => {
     setVisible(false);
+  };
+
+  const submit = async () => {
+    const data = await hook.submit();
+    if (project) {
+      setProject({ ...project, sprint: data });
+    }
+    close();
   };
 
   const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -74,7 +82,9 @@ const TaskModal = ({
         )}
 
         <div className={styles.spacer}></div>
-        <button className={styles.button} onClick={hook.submit}>생성하기</button>
+        <button className={styles.button} onClick={submit}>
+          생성하기
+        </button>
         <button className={`${styles.button} ${styles.cancel}`} onClick={close}>
           취소하기
         </button>

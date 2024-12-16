@@ -1,7 +1,10 @@
 import watodoAxios from "@/libs/axios/watodoAxios";
 import React, { useState } from "react";
 
-const useMakeTask = (parentType: "SPRINT" | "WBS", parentId: string) => {
+const useMakeTask = (parentType: "SPRINT" | "WBS", parentId: string | undefined) => {
+  if (!parentId) {
+    return;
+  }
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
@@ -16,10 +19,11 @@ const useMakeTask = (parentType: "SPRINT" | "WBS", parentId: string) => {
     }
     try {
       setLoading(true);
-      await watodoAxios.post(
+      const { data } = await watodoAxios.post(
         `/task/${parentType === "SPRINT" ? "sprint" : "wbs"}`,
         { title, parentId }
       );
+      return data;
     } catch {
       setIsFailed(true);
     } finally {

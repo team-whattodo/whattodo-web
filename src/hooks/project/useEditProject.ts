@@ -4,7 +4,10 @@ import { MakeProject } from "@/types/project/makeProject";
 import { ProjectDetail } from "@/types/project/projectDetail";
 import React, { useEffect, useState } from "react";
 
-const useEditProject = (project: ProjectDetail) => {
+const useEditProject = (project: ProjectDetail | null) => {
+  if(!project) {
+    return;
+  }
   const [projectData, setProjectData] = useState<MakeProject>({
     title: project.title,
     detail: project.detail,

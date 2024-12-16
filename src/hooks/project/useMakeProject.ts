@@ -1,6 +1,7 @@
 import { REPOSITORY_REGEX } from "@/constants/regex";
 import watodoAxios from "@/libs/axios/watodoAxios";
 import { MakeProject } from "@/types/project/makeProject";
+import { Project } from "@/types/project/project";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -40,8 +41,10 @@ const useMakeProject = () => {
     }
     try {
       setLoading(true);
-      await watodoAxios.post("/project", projectData);
-      router.push("/project/intro");
+      const { data } : { data: Project } = await watodoAxios.post("/project", projectData);
+      if (data) {
+        router.push(`/project/${data.id}/intro`);
+      }
     } catch {
       setIsFailed(true);
     } finally {

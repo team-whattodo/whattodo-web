@@ -35,13 +35,13 @@ input {
   --item-color: #3b3b3b;
   --border-color: #464646;
 
-  --color-100: hsl(166, 45%, 81%);
-  --color-200: hsl(166, 45%, 73%);
-  --color-300: hsl(166, 45%, 65%);
-  --color-400: hsl(166, 45%, 57%);
-  --color-500: hsl(166, 45%, 49%);
-  --color-600: hsl(166, 45%, 41%);
-  --color-700: hsl(166, 45%, 33%);
-  --color-800: hsl(166, 45%, 25%);
-  --color-900: hsl(166, 45%, 17%);
+  --color-100: #b9e4da;
+  --color-200: #9bd9cb;
+  --color-300: #7ecebb;
+  --color-400: #60c3ac;
+  --color-500: #45b59b;
+  --color-600: #3a9882;
+  --color-700: #2e7a68;
+  --color-800: #235c4f;
+  --color-900: #183f36;
 }

@@ -1,16 +1,11 @@
 "use client";
-import React, { SetStateAction } from "react";
+import React from "react";
 import styles from "./style.module.css";
 import useEditProject from "@/hooks/project/useEditProject";
-import { ProjectDetail } from "@/types/project/projectDetail";
+import { useProjectStore } from "@/store/useProjectStore";
 
-const ProjectSidebar = ({
-  project,
-  setProject,
-}: {
-  project: ProjectDetail;
-  setProject: React.Dispatch<SetStateAction<ProjectDetail | undefined>>;
-}) => {
+const ProjectSidebar = () => {
+  const { project, setProject } = useProjectStore();
   const { ...hook } = useEditProject(project);
 
   const submit = async () => {
@@ -57,7 +52,7 @@ const ProjectSidebar = ({
         {!hook.repoValid && "올바르지 않은 레포지토리 주소입니다."}
       </p>
       <p className={styles.sidebarSubTitle}>참가 코드</p>
-      <input type="text" className={styles.sidebarInput} readOnly value={project.id} />
+      <input type="text" className={styles.sidebarInput} readOnly value={project?.id} />
       <div className={styles.spacer}></div>
       <p className={styles.warning} style={{ margin: 0 }}>
         {hook.isFailed && "저장에 실패했습니다."}

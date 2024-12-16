@@ -1,6 +1,7 @@
 .container {
   width: calc(100% - 44rem);
   padding: 4rem 2rem;
+  overflow-y: scroll;
 }
 
 .sectionTitle {
@@ -43,7 +44,7 @@
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .taskCounter {
@@ -70,7 +71,7 @@
 
 .addTask {
   width: 3.2rem;
-  height: 3.2rem;
+  height: 12rem;
   padding-top: 0.2rem;
   display: flex;
   justify-content: center;

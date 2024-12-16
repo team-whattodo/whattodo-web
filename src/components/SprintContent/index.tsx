@@ -1,28 +1,44 @@
 "use client";
-import { Sprint } from "@/types/sprint/sprint";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import SprintTask from "../SprintTask";
 import TaskModal from "../TaskModal";
+import { useProjectStore } from "@/store/useProjectStore";
 
-const SprintContent = ({ data }: { data: Sprint }) => {
-  const doneTask = data.tasks.filter((item) => item.done);
+const SprintContent = () => {
+  const { project, setProject } = useProjectStore();
+  let doneTask = [];
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    console.log(project?.sprint);
+    if (project?.sprint) {
+      doneTask = project?.sprint?.task.filter((item) => item.done);
+    }
+  }, [project?.sprint]);
+
+  if (!project?.sprint?.task) {
+    return <div className={styles.container}></div>;
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.section}>
-        <p className={styles.sectionTitle}>"{data.title}" 스프린트 진척도</p>
-        <p className={styles.sprintDetail}>{data.detail}</p>
+        <p className={styles.sectionTitle}>
+          "{project?.sprint?.title}" 스프린트 진척도
+        </p>
+        <p className={styles.sprintDetail}>{project?.sprint?.detail}</p>
         <div className={styles.progressWrap}>
           <div
             className={styles.progress}
-            style={{ width: `${(data.tasks.length / doneTask.length) * 100}` }}
+            style={{
+              width: `${(project.sprint.task.length / doneTask.length) * 100}`,
+            }}
           ></div>
         </div>
         <div className={styles.taskCounterWrap}>
-          {data.tasks.map((task, idx) => {
-            if (idx !== data.tasks.length - 1) {
+          {project?.sprint?.task.map((task, idx) => {
+            if (project.sprint && idx !== project.sprint.task.length - 1) {
               return <span className={styles.taskCounter} key={task.id}></span>;
             }
           })}
@@ -31,11 +47,11 @@ const SprintContent = ({ data }: { data: Sprint }) => {
       <div className={styles.section}>
         <p className={styles.sectionTitle}>할 일 목록</p>
         <div className={styles.taskWrap}>
-          {data.tasks.map((task) => (
+          {project?.sprint?.task.map((task) => (
             <SprintTask data={task} key={task.id} />
           ))}
-          <div className={styles.addTaskWrap}>
-            <div className={styles.addTask} onClick={() => setModalVisible(true)}>+</div>
+          <div className={styles.addTask} onClick={() => setModalVisible(true)}>
+            +
           </div>
         </div>
       </div>
@@ -44,7 +60,6 @@ const SprintContent = ({ data }: { data: Sprint }) => {
           type="CREATE"
           setVisible={setModalVisible}
           parentType="SPRINT"
-          parentId={data.id}
         />
       )}
     </div>

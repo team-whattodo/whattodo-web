@@ -6,5 +6,5 @@ export interface Sprint {
   detail: string;
   start: string;
   deadline: string;
-  tasks: Task[];
+  task: Task[];
 }

@@ -4,5 +4,5 @@ export interface Wbs {
   id: string;
   title: string;
   detail: string;
-  tasks: Task[];
+  task: Task[];
 }
