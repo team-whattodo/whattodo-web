@@ -57,7 +57,11 @@ const useEditSprint = (sprint?: Sprint | null) => {
       sprintData.title.trim().length < 1 ||
       sprintData.detail.trim().length < 10 ||
       sprintData.start.length < 1 ||
-      sprintData.deadline.length < 1,
+      sprintData.deadline.length < 1 ||
+      (sprintData.title === sprint.title &&
+        sprintData.detail === sprint.detail &&
+        sprintData.start === sprint.start &&
+        sprintData.deadline === sprint.deadline),
   };
 };
 

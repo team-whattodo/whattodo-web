@@ -34,9 +34,7 @@ const SignupForm = () => {
         <div className={styles.warning}>
           {!signup.emailValid
             ? "이메일 형식이 올바르지 않습니다."
-            : signup.emailDuplicated
-            ? "이미 사용 중인 이메일 입니다."
-            : ""}
+            : signup.emailDuplicated && "이미 사용 중인 이메일 입니다."}
         </div>
         <p className={styles.label}>아이디</p>
         <input
@@ -53,9 +51,7 @@ const SignupForm = () => {
         <div className={styles.warning}>
           {!signup.usernameValid
             ? "3글자 이상 입력해주세요."
-            : signup.usernameDuplicated
-            ? "이미 사용 중인 아이디 입니다."
-            : ""}
+            : signup.usernameDuplicated && "이미 사용 중인 아이디 입니다."}
         </div>
         <p className={styles.label}>닉네임</p>
         <input
@@ -95,6 +91,23 @@ const SignupForm = () => {
         />
         <div className={styles.warning}>
           {!signup.passwordCheckValid && "비밀번호가 일치하지 않습니다."}
+        </div>
+        <p className={styles.label}>깃허브 Personal Access Token</p>
+        <input
+          type="password"
+          className={`${styles.input} ${
+            (!signup.patValid || signup.patDuplicated) && styles.wrong
+          }`}
+          placeholder="깃허브 토큰을 입력해주세요. (필수 권한: repo)"
+          name="pat"
+          onChange={signup.handleData}
+          value={signup.signupData.pat}
+          onKeyDown={onEnter}
+        />
+        <div className={styles.warning}>
+          {!signup.patValid
+            ? "올바르지 않은 토큰입니다."
+            : signup.patDuplicated && "이미 사용중인 토큰입니다."}
         </div>
       </div>
       <div className={styles.spacer}></div>

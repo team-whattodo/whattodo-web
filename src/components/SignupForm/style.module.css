@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   max-width: 40rem;
-  height: 72rem;
+  height: 80rem;
   border-radius: 1rem;
   background-color: var(--box-color);
   border: 0.1rem solid var(--border-color);

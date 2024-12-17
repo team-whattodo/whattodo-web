@@ -1,5 +1,5 @@
 import { API_URL } from "@/constants/api";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/constants/regex";
+import { EMAIL_REGEX, PASSWORD_REGEX, PAT_REGEX } from "@/constants/regex";
 import { SignupData } from "@/types/auth/signup";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ const useSignup = () => {
     password: "",
     nickname: "",
     username: "",
+    pat: "",
   });
   const [emailValid, setEmailValid] = useState(true);
   const [emailDuplicated, setEmailDuplicated] = useState(false);
@@ -21,6 +22,8 @@ const useSignup = () => {
   const [loading, setLoading] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordCheckValid, setPasswordCheckValid] = useState(true);
+  const [patValid, setPatValid] = useState(true);
+  const [patDuplicated, setPatDuplicated] = useState(false);
   const router = useRouter();
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,8 +90,16 @@ const useSignup = () => {
     }
   }, [signupData.nickname]);
 
+  useEffect(()=>{
+    if(signupData.pat.trim().length > 0 && !PAT_REGEX.test(signupData.pat)) {
+      setPatValid(false);
+    }else{
+      setPatValid(true);
+    }
+  },[signupData.pat]);
+
   const submit = async () => {
-    if (loading || !emailValid || !passwordValid || !nicknameValid || !usernameValid || !passwordCheckValid) {
+    if (loading || !emailValid || !passwordValid || !nicknameValid || !usernameValid || !passwordCheckValid || !patValid) {
       return;
     }
     try {
@@ -104,6 +115,9 @@ const useSignup = () => {
         }
         if (err.response.data.message === "Username is already in use") {
           setUsernameDuplicated(true);
+        }
+        if (err.response.data.message === "PAT is already in use") {
+          setPatDuplicated(true);
         }
       }
     } finally {
@@ -125,18 +139,23 @@ const useSignup = () => {
     passwordCheck,
     passwordCheckValid,
     handlePasswordCheck,
+    patDuplicated,
+    patValid,
     buttonDisabled:
       loading ||
       !emailValid ||
       !passwordValid ||
       !nicknameValid ||
       !usernameValid ||
+      !patValid ||
       signupData.email.trim().length === 0 ||
       signupData.password.trim().length === 0 ||
       signupData.nickname.trim().length === 0 ||
       signupData.username.trim().length === 0 ||
+      signupData.pat.trim().length === 0 ||
       emailDuplicated ||
-      usernameDuplicated,
+      usernameDuplicated ||
+      patDuplicated,
   };
 };
 

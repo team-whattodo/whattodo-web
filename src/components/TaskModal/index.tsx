@@ -19,25 +19,17 @@ const TaskModal = ({
   taskData: Task | undefined;
 }) => {
   const { project, setProject } = useProjectStore();
-  const { ...hook } = useMakeTask(parentType, project?.sprint?.id);
-  const { ...editHook } = useEditTask(parentType, taskData);
+  const createHook = useMakeTask(parentType, project?.sprint?.id);
+  const editHook = useEditTask(parentType, taskData);
 
-  const close = () => {
-    setVisible(false);
-  };
+  const currentHook = type === "CREATE" ? createHook : editHook;
+
+  const close = () => setVisible(false);
 
   const submit = async () => {
-    if (type === "CREATE") {
-      const data = await hook.submit();
-      if (project && data) {
-        setProject({ ...project, sprint: data });
-      }
-    } else {
-      const data = await editHook.submit();
-      console.log(data);
-      if (project && data) {
-        setProject({ ...project, sprint: data });
-      }
+    const data = await currentHook.submit();
+    if (project && data) {
+      setProject({ ...project, sprint: data });
     }
     close();
   };
@@ -46,67 +38,65 @@ const TaskModal = ({
     e.stopPropagation();
   };
 
+  const renderInput = (
+    name: string,
+    placeholder: string,
+    value?: string,
+    onChange?: React.ChangeEventHandler<HTMLInputElement>
+  ) => (
+    <>
+      <p className={styles.modalSubTitle}>{placeholder}</p>
+      <input
+        type="text"
+        className={styles.modalInput}
+        name={name}
+        placeholder={placeholder}
+        value={value || ""}
+        onChange={onChange}
+      />
+    </>
+  );
+
   return (
     <div className={styles.container} onClick={close}>
       <div className={styles.modal} onClick={stopPropagation}>
-        <p className={styles.modalTitle}>할 일 생성하기</p>
-        {parentType === "SPRINT" ? (
+        <p className={styles.modalTitle}>
+          {type === "CREATE" ? "할 일 생성하기" : "할 일 수정하기"}
+        </p>
+
+        {parentType === "SPRINT" && (
           <>
-            <p className={styles.modalSubTitle}>할 일 이름</p>
-            <input
-              type="text"
-              className={styles.modalInput}
-              placeholder="어떤 것을 개발해야 하나요? (1글자 이상)"
-              onChange={
-                type === "EDIT" ? editHook.handleData : hook.handleTitle
-              }
-              value={
-                type === "EDIT" ? editHook.taskData.title : hook.title || ""
-              }
-            />
-            {type === "EDIT" && (
-              <>
-                <p className={styles.modalSubTitle}>연결할 브랜치</p>
-                <input
-                  type="text"
-                  className={styles.modalInput}
-                  placeholder="브랜치 이름을 입력해주세요."
-                  name="branch"
-                  onChange={editHook.handleData}
-                  value={editHook.taskData.branch || ""}
-                />
-              </>
+            {renderInput(
+              "title",
+              "할 일 이름",
+              type === "EDIT" ? editHook.taskData.title : createHook.title,
+              type === "EDIT" ? editHook.handleData : createHook.handleTitle
             )}
+
+            {type === "EDIT" &&
+              renderInput(
+                "branch",
+                "연결할 브랜치",
+                editHook.taskData.branch,
+                editHook.handleData
+              )}
           </>
-        ) : (
+        )}
+
+        {parentType === "WBS" && (
           <>
-            <p className={styles.modalSubTitle}>할 일 이름</p>
-            <input
-              type="text"
-              className={styles.modalInput}
-              placeholder="어떤 것을 개발해야 하나요? (1글자 이상)"
-            />
+            {renderInput("title", "할 일 이름")}
             <p className={styles.formSubTitle}>시작일</p>
             <input type="date" className={styles.dateInput} />
             <p className={styles.formSubTitle}>종료일</p>
             <input type="date" className={styles.dateInput} />
-            {type === "EDIT" && (
-              <>
-                <p className={styles.modalSubTitle}>연결할 브랜치</p>
-                <input
-                  type="text"
-                  className={styles.modalInput}
-                  placeholder="브랜치 이름을 입력해주세요."
-                />
-              </>
-            )}
           </>
         )}
 
         <div className={styles.spacer}></div>
         <button className={styles.button} onClick={submit}>
           {type === "CREATE"
-            ? hook.loading
+            ? createHook.loading
               ? "생성 중..."
               : "생성하기"
             : editHook.loading

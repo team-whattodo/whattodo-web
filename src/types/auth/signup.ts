@@ -3,4 +3,5 @@ export interface SignupData {
   username: string;
   nickname: string;
   password: string;
+  pat: string;
 }

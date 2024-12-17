@@ -96,9 +96,8 @@
 
 .editSprintWrap {
   width: 100%;
-  background-color: var(--box-color);
   border-radius: 2rem;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .formSubTitle {

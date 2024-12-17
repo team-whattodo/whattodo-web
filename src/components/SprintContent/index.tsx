@@ -21,6 +21,13 @@ const SprintContent = () => {
     setModalVisible(true);
   };
 
+  const submit = async () => {
+    const data = await editHook.submit();
+    if (project && data) {
+      setProject({ ...project, sprint: data });
+    }
+  };
+
   useEffect(() => {
     setDoneTask(project?.sprint?.task.filter((item) => item.done) || []);
   }, [project?.sprint?.task]);
@@ -121,12 +128,12 @@ const SprintContent = () => {
           />
           <div className={styles.spacer}></div>
           <p className={styles.warning}>
-            {editHook.isFailed && "스프린트 생성에 실패했습니다."}
+            {editHook.isFailed && "스프린트 수정에 실패했습니다."}
           </p>
           <button
             className={styles.button}
             disabled={editHook.buttonDisabled}
-            onClick={editHook.submit}
+            onClick={submit}
           >
             {editHook.loading ? "수정 중..." : "수정하기"}
           </button>

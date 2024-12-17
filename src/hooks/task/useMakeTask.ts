@@ -2,9 +2,6 @@ import watodoAxios from "@/libs/axios/watodoAxios";
 import React, { useState } from "react";
 
 const useMakeTask = (parentType: "SPRINT" | "WBS", parentId: string | undefined) => {
-  if (!parentId) {
-    return;
-  }
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
@@ -14,7 +11,7 @@ const useMakeTask = (parentType: "SPRINT" | "WBS", parentId: string | undefined)
   };
 
   const submit = async () => {
-    if (loading || title.trim().length < 1) {
+    if (loading || title.trim().length < 1 || !parentId) {
       return;
     }
     try {
