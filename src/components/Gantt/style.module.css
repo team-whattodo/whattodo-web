@@ -1,0 +1,62 @@
+.chartContainer {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.chartTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.taskHeader {
+  font-size: 1.6rem;
+  padding: 1.2rem;
+  text-align: left;
+  border: 0.1rem solid var(--border-color);
+  min-width: 15rem;
+  font-family: var(--font-dohyeon);
+  font-style: italic;
+}
+
+.dateHeader {
+  font-size: 1.6rem;
+  color: var(--color-300);
+  text-align: center;
+  padding: 1rem ;
+  border: 0.1rem solid var(--border-color);
+  min-width: 10rem; 
+  white-space: nowrap;
+  font-family: var(--font-dohyeon);
+  font-style: italic;
+}
+
+.taskTitle {
+  height: 4rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 1rem;
+  border: 0.1rem solid var(--border-color);
+  white-space: nowrap;
+  font-family: var(--font-jua);
+}
+
+.chartCell {
+  position: relative;
+  border: 0.1rem solid var(--border-color);
+  min-width: 5rem;
+  height: rem;
+}
+
+.taskBar {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  border-radius: 0.8rem;
+  opacity: 0.9;
+  background-color: var(--color-500);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1.6rem;
+}

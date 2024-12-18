@@ -17,7 +17,19 @@ const useEditSprint = (sprint?: Sprint | null) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setSprintData((prev) => ({ ...prev, [name]: value }));
+    if (name === "start" || name === "deadline") {
+      const date = new Date(value);
+      setSprintData((prev) => ({
+        ...prev,
+        [name]: `${date.getFullYear()}-${
+          date.getMonth() + 1 < 10
+            ? "0" + date.getMonth() + 1
+            : date.getMonth() + 1
+        }-${date.getDate()}`,
+      }));
+    } else {
+      setSprintData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const submit = async () => {

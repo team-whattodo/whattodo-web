@@ -5,6 +5,7 @@ import useMakeTask from "@/hooks/task/useMakeTask";
 import { useProjectStore } from "@/store/useProjectStore";
 import { Task } from "@/types/task/task";
 import useEditTask from "@/hooks/task/useEditTask";
+import useDeleteTask from "@/hooks/task/useDeleteTask";
 
 const TaskModal = ({
   type,
@@ -13,23 +14,50 @@ const TaskModal = ({
   taskData,
 }: {
   type: "CREATE" | "EDIT";
-  taskId?: string;
   setVisible: React.Dispatch<SetStateAction<boolean>>;
   parentType: "SPRINT" | "WBS";
   taskData: Task | undefined;
 }) => {
   const { project, setProject } = useProjectStore();
-  const createHook = useMakeTask(parentType, project?.sprint?.id);
+  const createHook = useMakeTask(
+    parentType,
+    parentType === "WBS" ? project?.wbs?.id : project?.sprint?.id
+  );
   const editHook = useEditTask(parentType, taskData);
+  const deleteHook = useDeleteTask(taskData?.id);
 
   const currentHook = type === "CREATE" ? createHook : editHook;
 
   const close = () => setVisible(false);
 
   const submit = async () => {
-    const data = await currentHook.submit();
+    if (type === "CREATE") {
+      const data = await currentHook.submit();
+      if (project && data) {
+        setProject(
+          parentType === "WBS"
+            ? { ...project, wbs: data }
+            : { ...project, sprint: data }
+        );
+        close();
+      }
+    } else {
+      const data = await editHook.submit();
+      if (project && data) {
+        setProject(
+          parentType === "WBS"
+            ? { ...project, wbs: data }
+            : { ...project, sprint: data }
+        );
+        close();
+      }
+    }
+  };
+
+  const deleteSubmit = async () => {
+    const data = await deleteHook.submit();
     if (project && data) {
-      setProject({ ...project, sprint: data });
+      setProject({ ...project, ...data });
     }
     close();
   };
@@ -51,7 +79,7 @@ const TaskModal = ({
         className={styles.modalInput}
         name={name}
         placeholder={placeholder}
-        value={value || ""}
+        value={value}
         onChange={onChange}
       />
     </>
@@ -69,32 +97,86 @@ const TaskModal = ({
             {renderInput(
               "title",
               "할 일 이름",
-              type === "EDIT" ? editHook.taskData.title : createHook.title,
-              type === "EDIT" ? editHook.handleData : createHook.handleTitle
+              type === "EDIT"
+                ? editHook.taskData.title
+                : createHook.taskData.title,
+              type === "EDIT" ? editHook.handleData : createHook.handleData
             )}
-
-            {type === "EDIT" &&
-              renderInput(
-                "branch",
-                "연결할 브랜치",
-                editHook.taskData.branch,
-                editHook.handleData
-              )}
+            {renderInput(
+              "branch",
+              "연결할 브랜치",
+              type === "EDIT"
+                ? editHook.taskData.branch
+                : createHook.taskData.branch,
+              type === "EDIT" ? editHook.handleData : createHook.handleData
+            )}
           </>
         )}
 
         {parentType === "WBS" && (
           <>
-            {renderInput("title", "할 일 이름")}
-            <p className={styles.formSubTitle}>시작일</p>
-            <input type="date" className={styles.dateInput} />
-            <p className={styles.formSubTitle}>종료일</p>
-            <input type="date" className={styles.dateInput} />
+            {renderInput(
+              "title",
+              "할 일 이름",
+              type === "EDIT"
+                ? editHook.taskData.title
+                : createHook.taskData.title,
+              type === "EDIT" ? editHook.handleData : createHook.handleData
+            )}
+            {renderInput(
+              "branch",
+              "연결할 브랜치",
+              type === "EDIT"
+                ? editHook.taskData.branch
+                : createHook.taskData.branch,
+              type === "EDIT" ? editHook.handleData : createHook.handleData
+            )}
+            <p className={styles.modalSubTitle}>시작일</p>
+            <input
+              type="date"
+              className={styles.dateInput}
+              name="start"
+              onChange={
+                type === "EDIT" ? editHook.handleData : createHook.handleData
+              }
+              value={
+                type === "EDIT"
+                  ? editHook.taskData.start
+                  : createHook.taskData.start
+              }
+            />
+            <p className={styles.modalSubTitle}>종료일</p>
+            <input
+              type="date"
+              className={styles.dateInput}
+              name="deadline"
+              onChange={
+                type === "EDIT" ? editHook.handleData : createHook.handleData
+              }
+              value={
+                type === "EDIT"
+                  ? editHook.taskData.deadline
+                  : createHook.taskData.deadline
+              }
+            />
           </>
         )}
 
         <div className={styles.spacer}></div>
-        <button className={styles.button} onClick={submit}>
+        <p className={styles.warning}>
+          {type === "EDIT"
+            ? editHook.isFailed && "이미 등록된 브랜치 입니다."
+            : createHook.isFailed && "브랜치 생성에 실패 했습니다."}
+        </p>
+        <button
+          className={styles.button}
+          onClick={submit}
+          disabled={
+            type === "EDIT"
+              ? editHook.buttonDisabled
+              : createHook.buttonDisabled
+          }
+        >
           {type === "CREATE"
             ? createHook.loading
               ? "생성 중..."
@@ -103,6 +185,15 @@ const TaskModal = ({
             ? "수정 중..."
             : "수정하기"}
         </button>
+        {type === "EDIT" && (
+          <button
+            className={`${styles.button} ${styles.cancel} ${styles.delete}`}
+            onClick={deleteSubmit}
+            disabled={deleteHook.loading}
+          >
+            { deleteHook.loading ? "삭제 중..." : "삭제하기" }
+          </button>
+        )}
         <button className={`${styles.button} ${styles.cancel}`} onClick={close}>
           취소하기
         </button>

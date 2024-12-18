@@ -4,7 +4,7 @@ import useGetProject from "@/hooks/project/useGetProject";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import WbsContent from "@/components/Wbs";
+import WbsContent from "@/components/WbsContent";
 import SprintContent from "@/components/SprintContent";
 import ProjectSidebar from "@/components/ProjectSidebar";
 import Image from "next/image";
@@ -19,8 +19,6 @@ const ProjectPage = () => {
   const [loading, setLoading] = useState(false);
   const getProject = useGetProject(loading, setLoading);
   const { project, setProject } = useProjectStore();
-  const [sprint, setSprint] = useState<Sprint | null>(null);
-  const [wbs, setWbs] = useState<Wbs | null>(null);
   const router = useRouter();
 
   const fetchProject = async () => {
@@ -34,10 +32,6 @@ const ProjectPage = () => {
     fetchProject();
     localStorage.setItem("RECENT_PROJECT", projectId);
   }, [projectId]);
-
-  useEffect(() => {
-    console.log(sprint);
-  }, [sprint]);
 
   if (!project || loading) {
     return (
@@ -91,7 +85,7 @@ const ProjectPage = () => {
       </div>
       <div className={styles.projectLayout}>
         {project.wbs !== null ? (
-          <WbsContent data={project.wbs} />
+          <WbsContent />
         ) : (
           project.sprint !== null && (
             <SprintContent />
